@@ -16,7 +16,7 @@ LARGEST_N_TO_CHECK = 7
 #initialize Counters
 NGRAM_COUNTERS = {n: Counter() for n in range(1,LARGEST_N_TO_CHECK+1)}
 #looking forward only or forwards and backwards?
-DIRECTION = 'Forward Only' #change to 'Both if you want both forwards and backwards'
+DIRECTION = 'Forward Only' #change 'Forward Only' to 'Both if you want both forwards and backwards'
 
 #Function to clean and tokenize text
 def clean_and_tokenize_text(text, lemmatize = True, remove_stopwords = False):
