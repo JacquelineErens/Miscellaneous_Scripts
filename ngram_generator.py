@@ -42,14 +42,34 @@ def clean_and_tokenize_text(text, lemmatize = True, remove_stopwords = False):
 
 def get_n_grams(tokens, n_gram_level, direction):
 
-    #make list of ngrams looking in forward direction
-    n_grams_list = list(zip(*[tokens[i:] for i in range(n_gram_level)]))
+    #make list of ngrams looking in forward direction - the individual steps are below, but you can run it in one line
+    #n_grams_list = list(zip(*[tokens[i:] for i in range(n_gram_level)]))
+
+    #for understanding the steps contained within this line of code:
+    #https://www.w3schools.com/python/trypython.asp?filename=demo_ref_zip
+    #https://stackoverflow.com/questions/66203861/how-is-does-zip-generate-n-grams
+    #https://stackoverflow.com/questions/21883108/fast-optimize-n-gram-implementations-in-python
+
+    
+    #lists of tokens starting from the beginning and going n tokens out
+    list_slices = [tokens[i:] for i in range(n_gram_level)]
+    #print(list_slices)
+    #for i, slice in enumerate(list_slices):
+      #print(f"Slice {i}: {slice}")
+    #for n_gram in zip(*list_slices):
+      #print(n_gram)
+    #this is fun - it goes down the slices and takes the words at each index - so the first 7-gram would be the 0-th index of the 7 slices, and so on
+    n_grams_list = list(zip(*list_slices))
 
     #if you want backwards and forwards, combine those lists
     if direction != 'Forward Only':
-        #print()
-        n_grams_list = list(n_grams_list) + list(zip(*[tokens[::-1][i:] for i in range(n_gram_level)]))
+        #basically do the same thing on the reversed list, using the [::-1]
 
+        #here are the individual steps, but it's faster to do the one-liner. This is for understanding the process
+        reversed_tokens = tokens[::-1]
+        reversed_slices = [reversed_tokens[i:] for i in range(n_gram_level)]
+        reversed_ngrams_list = list(zip(*reversed_slices))
+        n_grams_list = n_grams_list + reversed_ngrams_list
     return n_grams_list
 
 def count_ngrams(cleaned_tokens, number_of_ngrams, direction = DIRECTION):
