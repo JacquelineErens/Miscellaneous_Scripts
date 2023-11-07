@@ -83,7 +83,7 @@ def save_counters_to_csv(NGRAM_COUNTERS):
 
     for n, counter in NGRAM_COUNTERS.items():
         ngrams_and_counts = pd.DataFrame([(' '.join(ngram), count) for ngram, count in counter.items()], columns=['ngram', 'count'])
-        ngrams_and_counts.head()
+        print(ngrams_and_counts.head())
         ngrams_and_counts.sort_values(by='count', ascending=False, inplace=True)
 
         #write csvs
